@@ -1,54 +1,47 @@
 package com.example.fundamentalandroid
 
-import android.content.res.TypedArray
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.AdapterView
-import android.widget.ListView
-import android.widget.Toast
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    private lateinit var adapter: HeroAdapter
-    private lateinit var dataName: Array<String>
-    private lateinit var dataDescription: Array<String>
-    private lateinit var dataPhoto: TypedArray
-    private var heroes = arrayListOf<Hero>()
+    private lateinit var btnSetValue: Button
+    private lateinit var tvText: TextView
+    private lateinit var imgPreview: ImageView
+
+    private var names = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val listView: ListView = findViewById(R.id.lv_list)
+        btnSetValue = findViewById(R.id.btn_set_value)
+        tvText = findViewById(R.id.tv_text)
 
-        adapter = HeroAdapter(this)
+        btnSetValue.setOnClickListener(this)
 
-        listView.adapter = adapter
+        imgPreview = findViewById(R.id.img_preview)
+        Glide.with(this).load(R.drawable.fronalpstock_big).into(imgPreview)
 
-        prepare()
-        addItem()
-
-        listView.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-            Toast.makeText(this@MainActivity, heroes[position].name, Toast.LENGTH_SHORT).show()
-        }
-
+        names.add("Narenda Wicaksono")
+        names.add("Kevin")
+        names.add("Yoza")
     }
 
-    private fun prepare() {
-        dataName = resources.getStringArray(R.array.data_name)
-        dataDescription = resources.getStringArray(R.array.data_description)
-        dataPhoto = resources.obtainTypedArray(R.array.data_photo)
-    }
-
-    private fun addItem() {
-        for (position in dataName.indices) {
-            val hero = Hero(
-                dataPhoto.getResourceId(position, -1),
-                dataName[position],
-                dataDescription[position]
-            )
-            heroes.add(hero)
+    override fun onClick(view: View) {
+        if (view.id == R.id.btn_set_value) {
+            Log.d("MainActivity", names.toString())
+            val name = StringBuilder()
+            for (i in 0..2) {
+                name.append(names[i]).append("\n")
+            }
+            tvText.text = name.toString()
         }
-        adapter.heroes = heroes
     }
 }
