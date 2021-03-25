@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Android Fundamental</string>
+    <string name="app_name">MyBackgroundThread</string>
+    <string name="start_task" translatable="false">Start Task</string>
+    <string name="status" translatable="false">Status</string>
+    <string name="hidden_text" translatable="false">Now you see me!</string>
+    <string name="task_completed" translatable="false">Task Completed</string>
+    <string name="compressing" translatable="false">Compresssing %d %%</string>
 </resources>
