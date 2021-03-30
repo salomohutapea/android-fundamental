@@ -7,8 +7,7 @@ import com.example.fundamentalandroid.databinding.ActivityMainBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragment.DialogDateListener,
-    TimePickerFragment.DialogTimeListener {
+class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragment.DialogDateListener, TimePickerFragment.DialogTimeListener {
 
     private var binding: ActivityMainBinding? = null
     private lateinit var alarmReceiver: AlarmReceiver
@@ -33,6 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
         // Listener repeating alarm
         binding?.btnRepeatingTime?.setOnClickListener(this)
         binding?.btnSetRepeatingAlarm?.setOnClickListener(this)
+        binding?.btnCancelRepeatingAlarm?.setOnClickListener(this)
 
         alarmReceiver = AlarmReceiver()
     }
@@ -52,12 +52,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
                 val onceTime = binding?.tvOnceTime?.text.toString()
                 val onceMessage = binding?.edtOnceMessage?.text.toString()
 
-                alarmReceiver.setOneTimeAlarm(
-                    this, AlarmReceiver.TYPE_ONE_TIME,
+                alarmReceiver.setOneTimeAlarm(this, AlarmReceiver.TYPE_ONE_TIME,
                     onceDate,
                     onceTime,
-                    onceMessage
-                )
+                    onceMessage)
             }
             R.id.btn_repeating_time -> {
                 val timePickerFragmentRepeat = TimePickerFragment()
@@ -66,11 +64,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, DatePickerFragme
             R.id.btn_set_repeating_alarm -> {
                 val repeatTime = binding?.tvRepeatingTime?.text.toString()
                 val repeatMessage = binding?.edtRepeatingMessage?.text.toString()
-                alarmReceiver.setRepeatingAlarm(
-                    this, AlarmReceiver.TYPE_REPEATING,
-                    repeatTime, repeatMessage
-                )
+                alarmReceiver.setRepeatingAlarm(this, AlarmReceiver.TYPE_REPEATING,
+                    repeatTime, repeatMessage)
             }
+            R.id.btn_cancel_repeating_alarm -> alarmReceiver.cancelAlarm(this, AlarmReceiver.TYPE_REPEATING)
         }
     }
 
